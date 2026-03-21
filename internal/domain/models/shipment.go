@@ -38,7 +38,7 @@ func NewShipment(origin, destination, driver, unit string, cost, revenue float64
 		Events:        []ShipmentEvent{event}}
 }
 
-func (s *Shipment) validStatusTransition(to Status) bool {
+func (s *Shipment) ValidStatusTransition(to Status) bool {
 	stats, ok := statusTransitions[s.Status]
 	if !ok {
 		return false
@@ -52,7 +52,7 @@ func (s *Shipment) validStatusTransition(to Status) bool {
 }
 
 func (s *Shipment) UpdateStatus(to Status) error {
-	valid := s.validStatusTransition(to)
+	valid := s.ValidStatusTransition(to)
 	if !valid {
 		return ErrInvalidTransition
 	}
