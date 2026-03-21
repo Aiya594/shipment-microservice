@@ -1,0 +1,7 @@
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    shipment_id VARCHAR(50) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (shipment_id) REFERENCES shipments(id) ON DELETE CASCADE
+);
