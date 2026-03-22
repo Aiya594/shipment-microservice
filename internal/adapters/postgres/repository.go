@@ -70,10 +70,6 @@ func (sr *ShipmentsPostgres) GetByID(id string) (*models.Shipment, error) {
 	return &s, nil
 }
 
-// func (sr *ShipmentsPostgres) UpdateStatus(id string, status models.Status) error {
-// 	return nil
-// }
-
 // add event info into events and update status of shipment in shipments
 func (sr *ShipmentsPostgres) AddEvent(se *models.ShipmentEvent, id string) error {
 	tx, err := sr.db.Begin()
