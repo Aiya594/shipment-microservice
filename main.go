@@ -44,7 +44,7 @@ func main() {
 
 	// Initialize gRPC server
 	grpcServer := grpc.NewServer()
-	shipmentServer := grpcAdapter.NewShipmentServer(service)
+	shipmentServer := grpcAdapter.NewShipmentServer(service, logger)
 	proto.RegisterShipmentServiceServer(grpcServer, shipmentServer)
 
 	// Start server

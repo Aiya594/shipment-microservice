@@ -20,12 +20,12 @@ func NewShipmentService(repo ports.ShipmentsRepository, logger *slog.Logger) *Sh
 
 func (s *ShipmentService) CreateShipment(origin, destination, driver, unit string, cost, revenue float64) (*models.Shipment, error) {
 	if origin == "" || destination == "" || driver == "" {
-		s.logger.Error("couldnt create shipment", "error", ErrBadCredentials, "origin", origin, "destination", destination, "driver", driver)
-		return nil, fmt.Errorf("origin, destination, and driver are required:%w", ErrBadCredentials)
+		s.logger.Error("couldnt create shipment", "error", ErrInvalidArgument, "origin", origin, "destination", destination, "driver", driver)
+		return nil, fmt.Errorf("origin, destination, and driver are required:%w", ErrInvalidArgument)
 	}
 	if cost < 0 || revenue < 0 {
-		s.logger.Error("couldnt create shipment", "error", ErrBadCredentials, "cost", cost, "revenue", revenue)
-		return nil, fmt.Errorf("cost and revenue must be non-negative:%w", ErrBadCredentials)
+		s.logger.Error("couldnt create shipment", "error", ErrInvalidArgument, "cost", cost, "revenue", revenue)
+		return nil, fmt.Errorf("cost and revenue must be non-negative:%w", ErrInvalidArgument)
 	}
 
 	shipment := models.NewShipment(origin, destination, driver, unit, cost, revenue)
@@ -40,8 +40,8 @@ func (s *ShipmentService) CreateShipment(origin, destination, driver, unit strin
 
 func (s *ShipmentService) GetShipment(id string) (*models.Shipment, error) {
 	if id == "" {
-		s.logger.Error("get shipment failed: empty id", "error", ErrBadCredentials)
-		return nil, fmt.Errorf("shipment ID is required:%w", ErrBadCredentials)
+		s.logger.Error("get shipment failed: empty id", "error", ErrInvalidArgument)
+		return nil, fmt.Errorf("shipment ID is required:%w", ErrInvalidArgument)
 	}
 
 	shipment, err := s.repo.GetByID(id)
@@ -71,8 +71,8 @@ func (s *ShipmentService) GetShipment(id string) (*models.Shipment, error) {
 func (s *ShipmentService) AddShipmentEvent(shipmentID string, status models.Status) error {
 	if shipmentID == "" {
 		s.logger.Error("add shipment event failed: empty shipment id",
-			"error", ErrBadCredentials)
-		return fmt.Errorf("shipment ID is required:%w", ErrBadCredentials)
+			"error", ErrInvalidArgument)
+		return fmt.Errorf("shipment ID is required:%w", ErrInvalidArgument)
 	}
 
 	//get current shipment to validate transition
@@ -121,8 +121,8 @@ func (s *ShipmentService) AddShipmentEvent(shipmentID string, status models.Stat
 func (s *ShipmentService) GetShipmentEvents(shipmentID string) ([]models.ShipmentEvent, error) {
 	if shipmentID == "" {
 		s.logger.Error("get shipment events failed: empty shipment id",
-			"error", ErrBadCredentials)
-		return nil, fmt.Errorf("shipment ID is required:%w", ErrBadCredentials)
+			"error", ErrInvalidArgument)
+		return nil, fmt.Errorf("shipment ID is required:%w", ErrInvalidArgument)
 	}
 
 	events, err := s.repo.GetEvents(shipmentID)

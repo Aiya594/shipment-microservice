@@ -3,5 +3,5 @@ package app
 import "errors"
 
 var (
-	ErrBadCredentials = errors.New("bad credentials")
+	ErrInvalidArgument = errors.New("invalid argument")
 )
