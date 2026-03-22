@@ -1,4 +1,4 @@
-package configs
+package cfgDB
 
 import (
 	"context"
@@ -19,7 +19,7 @@ type ConfigDB struct {
 	SSLMode  string
 }
 
-func NewConfigsDB() *ConfigDB {
+func LoadConfigsDB() *ConfigDB {
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
