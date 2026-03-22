@@ -14,8 +14,8 @@ var (
 func GenerateReferenceNum() string {
 	//example:REF-21032026-0001
 	mu.Lock()
-	mu.Unlock()
-	date := time.Now().Format("21012006")
+	defer mu.Unlock()
 	counter++
-	return fmt.Sprintf("REF-%s-%04d", date, counter)
+	ref := fmt.Sprintf("REF-%s-%04d", time.Now().Format("02012006"), counter)
+	return ref
 }
